@@ -1,0 +1,55 @@
+(defun throw-die ()
+  "return a random number in [1-6]"
+  (+ 1 (random 6)))
+
+(defun throw-dice ()
+  "return a pair of dice throws as a list"
+  (list (throw-die) (throw-die)))
+
+(defun snake-eyes-p (thr)
+  "return T if throw is snake eyes (1 1), else NIL"
+  (equal thr '(1 1)))
+
+(defun boxcars-p (thr)
+  "return T if throw is two sixes (6 6), else NIL"
+  (equal thr '(6 6)))
+
+(defun instant-win-p (thr)
+  "return T if winning throw, else NIL"
+  (let ((sum (+ (first thr) (second thr))))
+    (or (equal sum 7)
+        (equal sum 11))))
+
+(defun instant-loss-p (thr)
+  "return T if losing throw, else NIL"
+  (let ((sum (+ (first thr) (second thr))))
+    (or (equal sum 2)
+        (equal sum 3)
+        (equal sum 12))))
+
+(defun say-throw (thr)
+  "return sum of dices or SNAKE-EYES for (1 1) or BOXCARS for (6 6)"
+  (cond ((snake-eyes-p thr) 'SNAKE-EYES)
+        ((boxcars-p thr) 'BOXCARS)
+        (t (+ (first thr) (second thr)))))
+
+(defun craps ()
+  "simulate first throw in craps"
+  (let* ((thr (throw-dice))
+         (first (first thr))
+         (second (second thr)))
+    (cond ((instant-loss-p thr) (list 'THROW first 'AND second '-- (say-throw thr) '-- 'YOU 'LOSE))
+          ((instant-win-p thr) (list 'THROW first 'AND second '-- (say-throw thr) '-- 'YOU 'WIN))
+          (t (let ((point (+ first second)))
+               (setf *point* point)
+               (list 'THROW first 'AND second '-- 'YOUR 'POINT 'IS point))))))
+
+(defun try-for-point (point)
+  "try to get point again, you lose if you get 7"
+  (let* ((thr (throw-dice))
+         (first (first thr))
+         (second (second thr))
+         (sum (+ first second)))
+    (cond ((equal sum 7) (list 'THROW first 'AND second '-- sum '-- 'YOU 'LOSE))
+          ((equal sum point) (list 'THROW first 'AND second '-- sum '-- 'YOU 'WIN))
+          (t (list 'THROW first 'AND second '-- sum '-- 'THROW 'AGAIN)))))
