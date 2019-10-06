@@ -6,16 +6,30 @@ def read2(text):
     """
     >>> read2('()')
     NIL
+
     >>> read2('NIL')
     NIL
+
     >>> read2('T')
     T
+
     >>> read2('t')
     T
+
     >>> read2('cohadar')
     COHADAR
+
     >>> read2('(quote x)')
     Cons(QUOTE Cons(X NIL))
+
+    >>> read2('(a b c)'); read2('(a c b)'); read2('(b a c)'); read2('(b c a)')
+    Cons(A Cons(B Cons(C NIL)))
+    Cons(A Cons(C Cons(B NIL)))
+    Cons(B Cons(A Cons(C NIL)))
+    Cons(B Cons(C Cons(A NIL)))
+
+    >>> read2('(QUOTE (A B C))')
+    Cons(QUOTE Cons(Cons(A Cons(B Cons(C NIL))) NIL))
     """
     assert text is not None
     t = _Tokens(text)
@@ -70,7 +84,7 @@ class _Tokens():
         elif self.head() == ')':
             return Symbol.NIL  # <---<< empty list
         else:
-            car = Symbol(self.head())
+            car = Symbol.get(self.head())
             self._next()
             return Cons(car, self.parse_etuple())  # <---<< cons
 
