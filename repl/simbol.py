@@ -7,9 +7,11 @@ class Simbol():
         >>> Simbol(None)
         Traceback (most recent call last):
         AssertionError
+
         >>> Simbol('njak'); Simbol('njak')
         Traceback (most recent call last):
-        AssertionError
+        AssertionError: NJAK
+
         >>> Simbol('zrak')
         ZRAK
         """
@@ -24,13 +26,16 @@ class Simbol():
         """
         >>> Simbol.get('foo')
         FOO
+
         >>> Simbol.get('bar') == Simbol.get('bar')
         True
+
         >>> Simbol.get('foo') != Simbol.get('bar')
         True
         """
-        ret = Simbol.interned.get(name)
-        return ret if ret is not None else Simbol(name)
+        uname = name.upper()
+        ret = Simbol.interned.get(uname)
+        return ret if ret is not None else Simbol(uname)
 
     def __repr__(self):
         """
