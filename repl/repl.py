@@ -14,5 +14,7 @@ def repl(text):
     >>> repl('X')
     Traceback (most recent call last):
     ValueError: The variable X is unbound.
+    >>> repl('(QUOTE X)')
+    X
     """
     return print2(eval2(read2(text)))

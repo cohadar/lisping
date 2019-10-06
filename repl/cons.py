@@ -22,4 +22,4 @@ class Cons():
         return self._cdr
 
     def __repr__(self):
-        return '({!r} {!r})'.format(self._car, self._cdr)
+        return 'Cons({!r} {!r})'.format(self._car, self._cdr)
