@@ -1,48 +1,48 @@
-class Simbol():
+class Symbol():
     interned = {}
     NIL = None
 
     def __init__(self, name):
         """
-        >>> Simbol(None)
+        >>> Symbol(None)
         Traceback (most recent call last):
         AssertionError
 
-        >>> Simbol('njak'); Simbol('njak')
+        >>> Symbol('njak'); Symbol('njak')
         Traceback (most recent call last):
         AssertionError: NJAK
 
-        >>> Simbol('zrak')
+        >>> Symbol('zrak')
         ZRAK
         """
         assert name is not None
         uname = name.upper()
-        assert uname not in Simbol.interned, uname
+        assert uname not in Symbol.interned, uname
         self.name = uname
-        Simbol.interned[self.name] = self
+        Symbol.interned[self.name] = self
 
     @classmethod
     def get(cls, name):
         """
-        >>> Simbol.get('foo')
+        >>> Symbol.get('foo')
         FOO
 
-        >>> Simbol.get('bar') == Simbol.get('bar')
+        >>> Symbol.get('bar') == Symbol.get('bar')
         True
 
-        >>> Simbol.get('foo') != Simbol.get('bar')
+        >>> Symbol.get('foo') != Symbol.get('bar')
         True
         """
         uname = name.upper()
-        ret = Simbol.interned.get(uname)
-        return ret if ret is not None else Simbol(uname)
+        ret = Symbol.interned.get(uname)
+        return ret if ret is not None else Symbol(uname)
 
     def __repr__(self):
         """
-        >>> Simbol('lalala')
+        >>> Symbol('lalala')
         LALALA
         """
         return self.name
 
 
-Simbol.NIL = Simbol.get('NIL')
+Symbol.NIL = Symbol.get('NIL')

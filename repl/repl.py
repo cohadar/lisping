@@ -1,10 +1,6 @@
-from read import Read
-from eval import Eval
-from print import Print
-
-_read = Read()
-_eval = Eval()
-_print = Print()
+from read2 import read2
+from eval2 import eval2
+from print2 import print2
 
 
 def repl(text):
@@ -16,6 +12,7 @@ def repl(text):
     >>> repl('T')
     T
     >>> repl('X')
-    The variable X is unbound.
+    Traceback (most recent call last):
+    ValueError: The variable X is unbound.
     """
-    return print(_print(_eval(_read(text))))
+    return print2(eval2(read2(text)))
