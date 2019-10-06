@@ -1,4 +1,7 @@
-(defmacro swap (x y)
-  `(progn (setf temp ,x)
-         (setf ,x ,y)
-         (setf ,y temp)))
+(defun ror (l)
+  (let ((njak (reverse (rest (reverse l)))))
+    (cons (car (last l)) njak)))
+
+(print (ror '(a b c d e )))
+
+
